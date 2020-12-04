@@ -1,22 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
+import Essay from './Essay';
+import Prompts from './Prompts';
 
 require('./App.scss');
 
-const App = ({ counter, increment }) => (
-  <div className="match-area">
-    Counter (to make sure redux works): {counter}
-    <br />
-    <br />
-    <button onClick={increment}>
-      Increment
-    </button>
+const App = () => (
+  <div className="content-container">
+    <Prompts />
+    <Essay />
   </div>
 );
-
-App.propTypes = {
-  counter: PropTypes.number.isRequired,
-  increment: PropTypes.func.isRequired,
-};
 
 export default App;
