@@ -10,20 +10,14 @@ require('./Prompts.scss');
 
 const Prompts = () => {
   const fields = useSelector((state) => state.fieldOrder);
-  const fieldAnswers = useSelector((state) => state.fieldAnswers);
 
-  const fieldsList = fields.map((field) => {
-    const answer = fieldAnswers[field] || '';
-
-    return (
-      <Question
-        key={COPY[field]}
-        answer={answer}
-        onChange={() => null}
-        question={COPY[field]}
-      />
-    );
-  });
+  const fieldsList = fields.map((field) => (
+    <Question
+      key={field}
+      field={field}
+      question={COPY[field]}
+    />
+  ));
 
   return (
     <div className="prompt-container">

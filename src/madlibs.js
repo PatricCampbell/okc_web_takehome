@@ -7,6 +7,7 @@ import {
 // ----------------------------------------------------------------------------
 
 export const SUBMIT_FIELD = 'MADLIBS.SUBMIT_FIELD';
+export const UPDATE_FIELD_ANSWER = 'MADLIBS.UPDATE_FIELD_ANSWER';
 
 // Initial state
 // ----------------------------------------------------------------------------
@@ -32,7 +33,18 @@ export const INITIAL_STATE = {
 export function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case SUBMIT_FIELD: {
-      return state;
+      const { field } = action.payload;
+
+      return { ...state, essayText: `new text in ${field}` };
+    }
+
+    case UPDATE_FIELD_ANSWER: {
+      const { answer, field } = action.payload.update;
+      const { fieldAnswers } = state;
+
+      fieldAnswers[field] = answer;
+
+      return { ...state, fieldAnswers };
     }
 
     default:
@@ -44,6 +56,10 @@ export function reducer(state = INITIAL_STATE, action) {
 // Action creators
 // ----------------------------------------------------------------------------
 
-export function submitField({ id, answer }) {
-  return { type: SUBMIT_FIELD, payload: { fieldName: id, answer } };
+export function submitField({ field }) {
+  return { type: SUBMIT_FIELD, payload: { field } };
+}
+
+export function updateFieldAnswer({ answer, field }) {
+  return { type: UPDATE_FIELD_ANSWER, payload: { update: answer, field } };
 }

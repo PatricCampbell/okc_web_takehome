@@ -1,20 +1,49 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
-const Question = ({ answer, onChange, question }) => (
-  <>
-    <p>{question}</p>
-    <input onChange={onChange} type="text" value={answer} />
-  </>
-);
+import { SUBMIT_FIELD, UPDATE_FIELD_ANSWER } from '../madlibs';
 
-Question.defaultProps = {
-  answer: '',
+require('./Question.scss');
+
+const Question = ({ field, question }) => {
+  const dispatch = useDispatch();
+  const fieldAnswers = useSelector((state) => state.fieldAnswers);
+
+  const onBlur = () => {
+    dispatch({ type: SUBMIT_FIELD, payload: field });
+  };
+
+  const onChange = (event) => {
+    const payload = {
+      update: {
+        answer: event.target.value,
+        field,
+      },
+    };
+
+    dispatch({ type: UPDATE_FIELD_ANSWER, payload });
+  };
+
+  return (
+    <div className="question-container">
+      <label htmlFor={field}>
+        <p>{question}</p>
+        <input
+          className="question-input"
+          name={field}
+          onBlur={onBlur}
+          onChange={onChange}
+          type="text"
+          value={fieldAnswers[field]}
+        />
+      </label>
+    </div>
+  );
 };
 
 Question.propTypes = {
-  answer: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
+  field: PropTypes.string.isRequired,
   question: PropTypes.string.isRequired,
 };
 
