@@ -1,17 +1,25 @@
 .essay-edit-container {
+  align-items: center;
   background-color: rgb(242, 245, 249);
+  height: calc(100vh - 136px);
+  margin: 35px;
+  padding: 30px 200px;
+}
+
+.essay-edit-inner-content,
+.essay-edit-container {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  margin: 35px auto;
-  padding: 30px 200px;
 }
 
 .essay-edit-textarea {
   border: none;
   border-radius: 3px;
+  color: rgb(128, 131, 142);
+  font-family: sans-serif;
   height: 160px;
-  padding: 4px;
+  margin: 26px 0;
+  padding: 10px;
   resize: none;
   width: 400px;
 }

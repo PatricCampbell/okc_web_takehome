@@ -22,13 +22,14 @@ const EssayEdit = ({ updateEditMode }) => {
 
   return (
     <div className="essay-edit-container">
-      <Header text="Your essay Text" />
-      <textarea className="essay-edit-textarea" onChange={(event) => updateEssayText(event.target.value)} value={essayText} />
-      <Button handleClick={handleClick}>Start Over</Button>
+      <div className="essay-edit-inner-content">
+        <Header text="Your essay Text" />
+        <textarea className="essay-edit-textarea" onChange={(event) => updateEssayText(event.target.value)} value={essayText} />
+        <Button handleClick={handleClick}>Start Over</Button>
+      </div>
     </div>
   );
 };
-
 
 EssayEdit.propTypes = {
   updateEditMode: PropTypes.func.isRequired,
