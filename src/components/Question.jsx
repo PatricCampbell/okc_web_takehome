@@ -1,28 +1,17 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { SUBMIT_FIELD, UPDATE_FIELD_ANSWER } from '../madlibs';
+import { SUBMIT_FIELD } from '../madlibs';
 
 require('./Question.scss');
 
 const Question = ({ field, question }) => {
+  const [answer, setAnswer] = useState('');
   const dispatch = useDispatch();
-  const fieldAnswers = useSelector((state) => state.fieldAnswers);
 
   const onBlur = () => {
-    dispatch({ type: SUBMIT_FIELD, payload: field });
-  };
-
-  const onChange = (event) => {
-    const payload = {
-      update: {
-        answer: event.target.value,
-        field,
-      },
-    };
-
-    dispatch({ type: UPDATE_FIELD_ANSWER, payload });
+    dispatch({ type: SUBMIT_FIELD, payload: { field, answer } });
   };
 
   return (
@@ -33,9 +22,9 @@ const Question = ({ field, question }) => {
           className="question-input"
           name={field}
           onBlur={onBlur}
-          onChange={onChange}
+          onChange={(event) => setAnswer(event.target.value)}
           type="text"
-          value={fieldAnswers[field]}
+          value={answer}
         />
       </label>
     </div>

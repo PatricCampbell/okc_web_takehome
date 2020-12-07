@@ -7,7 +7,6 @@ import {
 // ----------------------------------------------------------------------------
 
 export const SUBMIT_FIELD = 'MADLIBS.SUBMIT_FIELD';
-export const UPDATE_FIELD_ANSWER = 'MADLIBS.UPDATE_FIELD_ANSWER';
 
 // Initial state
 // ----------------------------------------------------------------------------
@@ -21,9 +20,14 @@ export const INITIAL_STATE = {
     FIELD_NAMES.messageIf,
     FIELD_NAMES.bar,
   ],
-
-  fieldAnswers: {},
-  essayText: '',
+  fieldAnswers: {
+    [FIELD_NAMES.hometown]: null,
+    [FIELD_NAMES.favoriteFood]: null,
+    [FIELD_NAMES.loveToDo]: null,
+    [FIELD_NAMES.music]: null,
+    [FIELD_NAMES.messageIf]: null,
+    [FIELD_NAMES.bar]: null,
+  },
 };
 
 
@@ -33,16 +37,14 @@ export const INITIAL_STATE = {
 export function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case SUBMIT_FIELD: {
-      const { field } = action.payload;
+      const fieldAnswers = { ...state.fieldAnswers };
+      const { answer, field } = action.payload;
 
-      return { ...state, essayText: `new text in ${field}` };
-    }
-
-    case UPDATE_FIELD_ANSWER: {
-      const { answer, field } = action.payload.update;
-      const { fieldAnswers } = state;
-
-      fieldAnswers[field] = answer;
+      if (answer === '') {
+        fieldAnswers[field] = null;
+      } else {
+        fieldAnswers[field] = answer;
+      }
 
       return { ...state, fieldAnswers };
     }
@@ -57,9 +59,5 @@ export function reducer(state = INITIAL_STATE, action) {
 // ----------------------------------------------------------------------------
 
 export function submitField({ field }) {
-  return { type: SUBMIT_FIELD, payload: { field } };
-}
-
-export function updateFieldAnswer({ answer, field }) {
-  return { type: UPDATE_FIELD_ANSWER, payload: { update: answer, field } };
+  return { type: SUBMIT_FIELD, payload: { update: field } };
 }
