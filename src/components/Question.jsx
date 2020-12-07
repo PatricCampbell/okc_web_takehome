@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { SUBMIT_FIELD } from '../madlibs';
+import { CHECK_FOR_COMPLETE, SUBMIT_FIELD } from '../madlibs';
 
 require('./Question.scss');
 
@@ -12,6 +12,7 @@ const Question = ({ field, question }) => {
 
   const onBlur = () => {
     dispatch({ type: SUBMIT_FIELD, payload: { field, answer } });
+    dispatch({ type: CHECK_FOR_COMPLETE });
   };
 
   return (
