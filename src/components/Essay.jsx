@@ -1,8 +1,9 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import getTextTemplates from '../helpers';
+import { SUBMIT_ESSAY } from '../madlibs';
 
 import Button from './Button';
 import Header from './Header';
@@ -17,9 +18,18 @@ const getRandomTemplate = (field) => {
   return madlibsTemplates[randomTemplateIndex];
 };
 
-const Essay = () => {
+const Essay = ({ updateEditMode }) => {
+  const dispatch = useDispatch();
+
   const fieldOrder = useSelector((state) => state.fieldOrder);
   const showButton = useSelector((state) => state.isEssayComplete);
+
+  const handleClick = () => {
+    const essay = document.querySelector('.essay-content').innerText;
+
+    updateEditMode(true);
+    dispatch({ type: SUBMIT_ESSAY, payload: { essay } });
+  };
 
   const essay = fieldOrder.map((field) => (
     <EssayPiece key={field} field={field} />
@@ -31,9 +41,13 @@ const Essay = () => {
       <p className="essay-content">
         {essay}
       </p>
-      {showButton && <Button handleClick={() => null}>Edit</Button>}
+      {showButton && <Button handleClick={handleClick}>Edit</Button>}
     </div>
   );
+};
+
+Essay.propTypes = {
+  updateEditMode: PropTypes.func.isRequired,
 };
 
 const EssayPiece = ({ field }) => {
